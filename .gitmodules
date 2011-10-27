@@ -1,0 +1,3 @@
+[submodule "deps/UglifyJS"]
+	path = deps/UglifyJS
+	url = git://github.com/WolfgangKluge/UglifyJS.git

@@ -1,0 +1,17 @@
+{
+    "name": "coveraje",
+    "description" : "a simple javascript code coverage tool",
+    "keywords": [
+        "code coverage",
+        "test coverage",
+        "javascript"
+    ],
+    "author": {
+        "name": "Wolfgang Kluge"
+    },
+    "version": "0.1.0",
+    "main": "./lib/coveraje.js",
+    "repository": {
+        "type": "git"
+    }
+}
