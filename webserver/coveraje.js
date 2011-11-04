@@ -371,7 +371,7 @@ var coverajeResults = (function () {
                                     return idx + start;
                                 })).join("\n")
                             );
-                        }, 1)
+                        }, 1);
                         
                         showText(colorize(null, settings.code));
                         
