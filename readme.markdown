@@ -23,7 +23,7 @@ coveraje provides only only few public functions
 >         }
 >   ```
 >   Each runner is called with one argument - the context. There you can find the global scope of the executed code.
->   In order to get asynchronious tests run until the end, you have to use
+>   In order to get asynchronous tests run until the end, you have to use
 >   
 >   ```javascript
 >   return coveraje.runHelper.createEmitter(function (event) {
@@ -41,7 +41,7 @@ coveraje provides only only few public functions
 > 
 > > `colorizeShell` _string_
 > >     if true, uses ANSI escape sequences to color the console output
-> >     In case you get wired text in your console, turn it off...
+> >     In case you get wierd text in your console, turn it off...
 > >     _default_: __true__
 > > 
 > > `globals` _"node"_, _"browser"_, or any combination
@@ -105,14 +105,14 @@ coveraje provides only only few public functions
   The web interface uses __jquery__ (latest version is loaded from [jQuery CDN](http://code.jquery.com/))
 
 * [JSDom](https://github.com/tmpvar/jsdom)
-  Depending on the configuration (option `global`), __jsdom__ (and its dependencies) is used.
+  Depending on the configuration (option `globals`), __jsdom__ (and its dependencies) is used.
   Currently it does not work well on Windows (blame on __contextify__) - but it should work in the near future ([promised for version 0.3.0](http://groups.google.com/group/jsdom/browse_thread/thread/b3102ac36f281891))
 
 * [expresso](http://visionmedia.github.com/expresso/)
   if you choose the __expresso__ helper, you will need expresso ;)
   
 * [nodeunit](https://github.com/caolan/nodeunit)
-  if you choose the __nodeunit__ helper, you will need nodeunit ;)
+  if you choose the __nodeunit__ helper, you will need nodeunit...
 
 #### Development-Dependencies
 
