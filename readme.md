@@ -3,8 +3,7 @@
 
 ### Usage 
 
-----
-
+---------------
 coveraje provides only only few public functions
 
 ```javascript
@@ -89,33 +88,44 @@ coveraje provides only only few public functions
 
 ###  Dependencies:
 
--------------
+---------------
 #### coveraje needs
 
-* https://github.com/mishoo/UglifyJS
+* [Node.js](http://nodejs.org/)
+  The runtime. A version that runs in browsers only is on the agenda.
+
+* [UglifyJS](https://github.com/mishoo/UglifyJS)
   A slightly modified version of the __uglify-js__ parser is used.
   The modifications can be found at https://github.com/WolfgangKluge/UglifyJS
   Hopefully they get into the main branch soon ;)
 
-* http://jquery.com/
-  The web interface uses __jquery__ (latest version is loaded from [jQuery CDN](http://code.jquery.com/))
-
-* http://jshint.com/
-  all js-files are linted by __jshint__, so it's needed for the tests only
-
 #### Sometimes-Dependencies
 
-* https://github.com/tmpvar/jsdom
+* [JQuery](http://jquery.com/)
+  The web interface uses __jquery__ (latest version is loaded from [jQuery CDN](http://code.jquery.com/))
+
+* [JSDom](https://github.com/tmpvar/jsdom)
   Depending on the configuration (option `global`), __jsdom__ (and its dependencies) is used.
   Currently it does not work well on Windows (blame on __contextify__) - but it should work in the near future ([promised for version 0.3.0](http://groups.google.com/group/jsdom/browse_thread/thread/b3102ac36f281891))
 
-* http://visionmedia.github.com/expresso/
-  if you choose the expresso helper, you will need expresso ;)
+* [expresso](http://visionmedia.github.com/expresso/)
+  if you choose the __expresso__ helper, you will need expresso ;)
+  
+* [nodeunit](https://github.com/caolan/nodeunit)
+  if you choose the __nodeunit__ helper, you will need nodeunit ;)
+
+#### Development-Dependencies
+
+* [JSHint](http://jshint.com/)
+  all js-files are linted by __jshint__, so it's needed for the tests
+
+* [expresso](http://visionmedia.github.com/expresso/)
+  for the unit tests
 
 ###  TDD Frameworks:
 
 ---------------
-If you have unit tests (you should) and want to know if they cover your source code, you may try it with a helper to create a _test runners_.
-Currently there's only one helper for __expresso__.
+If you have unit tests (you should) and want to know how they cover your source code, you may try it with a helper to create a _test runners_.
+Currently there are helpers for __expresso__ and __nodeunit__.
 
-This helper modifies the __expresso__-source code on the fly (not permanent) - what can lead to bugs in future versions of __expresso__ (_will say_: please report bugs as soon as possible *g*).
+The __expresso__-helper modifies the __expresso__-source code on the fly (not permanent). This can lead to bugs in future versions of __expresso__ (_will say_: please report bugs as soon as possible \*g\*).
