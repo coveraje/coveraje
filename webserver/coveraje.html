@@ -13,14 +13,16 @@
 		<script src="coveraje.js"></script>
 	</head>
 	<body>
-		<header class="top-header">
+		<header class="top-header unselectable">
 			<nav>
 				<div id="colors"></div>
 				<div id="tests"></div>
 			</nav>
 		</header>
 		<section class="main-section">
-			<pre id="code" class="cm-s-default"></pre>
+            <div class="gutter"></div>
+            <pre id="lines" class="lines unselectable"></pre>
+			<pre id="code" class="code"></pre>
 		</section>
 	</body>
 </html>

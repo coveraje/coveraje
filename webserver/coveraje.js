@@ -364,6 +364,15 @@ var coverajeResults = (function () {
                 
                 if (settings) {
                     if (settings.code) {
+                        setTimeout(function () {
+                            var start = a.skippedLines + 1;
+                            $("#lines").html(
+                                $.makeArray($.map(settings.code.split(/\n/g), function (el, idx) {
+                                    return idx + start;
+                                })).join("\n")
+                            );
+                        }, 1)
+                        
                         showText(colorize(null, settings.code));
                         
                         if (settings.runner) {

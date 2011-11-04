@@ -81,6 +81,15 @@ pre {
 	height: 14px;
 }
 
+.unselectable {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
 .top-header {
 	display: block;
 	position: fixed;
@@ -88,6 +97,7 @@ pre {
 	height: 40px;
 	width: 100%;
 	border-bottom: 2px solid gray;
+    z-index: 2;
 }
 
 .main-section {
@@ -119,4 +129,26 @@ pre {
 .cc_keyword {
 	color: blue;
 	font-weight: bold;
+}
+
+.gutter {
+    position: fixed;
+    width: 60px;
+    left: 0px;
+    top: 0px;
+    right: 60px;
+    bottom: 0px;
+    border-right: 1px solid #c0c0c0;
+    background-color: #e0e0e0;
+}
+
+.code {
+    position: absolute;
+    left: 63px;
+}
+
+.lines {
+    position: absolute;
+    text-align: right;
+    width: 58px;
 }
