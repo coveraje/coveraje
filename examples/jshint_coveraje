@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+(function () {
+    "use strict";
+    
+    var coveraje = require("coveraje").coveraje,
+        fs = require("fs"),
+        path = require("path"),
+        filePath = path.resolve("../jshint.js");
+        
+    fs.readFile(filePath, 'utf-8', function (err, data) {
+        function runTests(file, helper) {
+            return function (context) {
+                // hack: set cache value
+                require.cache[filePath] = {
+                    id: filePath,
+                    exports: context,
+                    loaded: true
+                };
+                
+                return coveraje.runHelper(helper).run(file);
+            };
+        }
+        
+        if (err) throw err;
+        
+        var tests = {};
+        
+        fs.readdir('./', function (err, files) {
+            files.forEach(function (f) {
+                if (f.length > 2 && f.substr(f.length - 3, 3) === ".js" && f.substr(0, 1) !== ".") {
+                    tests[f] = runTests('./' + f, "expresso");
+                }
+            });
+            
+            coveraje.cover(data, tests, {
+                useServer: true
+            });
+        });
+    });
+    
+    return this;
+}());
