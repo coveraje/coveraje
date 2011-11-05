@@ -25,23 +25,38 @@
                 showhead();
                 console.log(file);
                 console.log("cannot load " + err);
-            } else if (!jshint(data, options, globals)) {
-                showhead();
+            } else {
+                if (path.extname(file) === "") {
+                    // if  no extension, only lint files with #! ... node
+                    if (data.length < 2 || data.substr(0, 2) !== "#!") {
+                        return;
+                    }
+                    var nidx = data.indexOf("node");
+                    
+                    if (nidx === -1 || nidx > data.indexOf("\n")) {
+                        return;
+                    }
+                }
                 
-                console.log(file);
-                console.log(
-                    jshint.errors.map(function (el) {
-                        if (el) {
-                            return {line: el.line, msg: el.reason, code: el.evidence};
-                        }
-                    })
-                );
-                console.log("--------------");
+                if (!jshint(data, options, globals)) {
+                    showhead();
+                    
+                    console.log(file);
+                    console.log(
+                        jshint.errors.map(function (el) {
+                            if (el) {
+                                return {line: el.line, msg: el.reason, code: el.evidence};
+                            }
+                        })
+                    );
+                    console.log("--------------");
+                }
             }
         });
     }
 
     function testFiles(folder, options, globals) {
+        folder = path.resolve(__dirname, folder);
         fs.readdir(
             folder,
             function (err, files) {
@@ -84,8 +99,7 @@
                     var ext = path.extname(files[i]);
                     if (fs.statSync(fp).isFile(fp) &&
                         fp.substr(fp.length - 1) !== "~" &&
-                        (ext === ".js" || ext === "")) {
-                        
+                        (ext === ".js" || ext === ".json" || ext === "")) {
                         test(fp, ops, globals);
                     }
                 }
@@ -93,7 +107,9 @@
         );
     }
     
+    testFiles("../");
     testFiles("../lib");
+    testFiles("../examples");
     testFiles("../lib/helper");
     testFiles("../webserver");
     testFiles("../test");
