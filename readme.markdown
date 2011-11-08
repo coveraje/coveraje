@@ -39,6 +39,11 @@ coveraje provides only only few public functions
 > `options` _{ key: value }_  
 > Currently, there are the following options  
 > 
+> > `beautify` _boolean_  
+> >     if true, the code to inspect will be beautified (by uglifyjs) first  
+> >     All comments are stripped by the beautifier.  
+> >     _default_: __false__  
+> > 
 > > `colorizeShell` _boolean_  
 > >     if true, uses ANSI escape sequences to color the console output  
 > >     In case you get wierd text in your console, turn it off...  
