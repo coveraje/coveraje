@@ -10,8 +10,10 @@ coveraje provides only only few public functions
     coveraje.cover(code, runner, options, callback)
 ```
 > 
-> `code` _string_  
+> `code` _string_ || _function_  
 >     the code that should be tested.
+>     if it's a function, it should return a string
+>     this function is called, everytime the page is refreshed (F5)
 > 
 > `runner` _function_ | _{ key: function }_  
 >     This parameter takes a runner-function, or an object with multiple runners.  
