@@ -11,7 +11,7 @@
     },
     "version": "0.1.1",
     "preferGlobal": true,
-    "main": "./lib/coveraje.js",
+    "main": "./lib/node-coveraje.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/coveraje/coveraje"
