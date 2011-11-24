@@ -297,7 +297,6 @@ var coverajeResults = (function () {
     
     function show(data) {
         var max = data.counted.length;
-        
         $("#colors").empty();
         
         // show colored code
@@ -307,11 +306,12 @@ var coverajeResults = (function () {
         var $c = $("<div>");
         var um = Math.max(1, max / colors.maxColors);
         
-        for (var i = 0; i < max; i += um) {
+        var doMax = Math.min(max, colors.maxColors);
+        var doDiff = Math.max(1, (max - 1) / (colors.maxColors - 1));
+        for (var i = 0; i < doMax; i += 1) {
             /*jshint white: false*/
-            var ii = Math.round(i);
-            if (ii > max - 1) ii = max - 1;
-            var col = colors.calc(max, i);
+            var ii = Math.round(i * doDiff);
+            var col = colors.calc(max, ii);
             var d = data.counted[ii];
             if (d == null) d = "";
             
@@ -321,7 +321,7 @@ var coverajeResults = (function () {
                         color: colors.hex(col, true),
                         backgroundColor: colors.hex(col)
                     })
-                    .text(i < 2 || ii == max - 1 ? d : "")
+                    .text(i < 2 || i === doMax - 1 ? d : "")
                     .attr("title", d)
             );
         }
@@ -361,6 +361,7 @@ var coverajeResults = (function () {
                 
                 if (settings) {
                     if (settings.code) {
+                        // show lines
                         setTimeout(function () {
                             var start = a.skippedLines + 1;
                             var n = /\n/g;
