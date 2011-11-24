@@ -8,41 +8,36 @@
         path = require("path"),
         filePath = path.resolve("../jshint.js");
         
-    function runTests(file, helper) {
-        return function (context) {
-            // hack: set cache value
-            require.cache[filePath] = {
-                id: filePath,
-                exports: context,
-                loaded: true
+    fs.readFile(filePath, 'utf-8', function (err, data) {
+        function runTests(file, helper) {
+            return function (context) {
+                // hack: set cache value
+                require.cache[filePath] = {
+                    id: filePath,
+                    exports: context,
+                    loaded: true
+                };
+                
+                return coveraje.runHelper(helper).run(file);
             };
-            
-            return coveraje.runHelper(helper).run(file);
-        };
-    }
-    
-    var tests = {};
-    
-    fs.readdir('./', function (err, files) {
-        files.forEach(function (f) {
-            if (f.length > 2 && f.substr(f.length - 3, 3) === ".js" && f.substr(0, 1) !== ".") {
-                tests[f] = runTests('./' + f, "expresso");
-            }
-        });
+        }
         
-        coveraje.cover(
-            function () {
-                // always read the content from disk, so changes can be refreshed in the browser
-                try {
-                    return fs.readFileSync(filePath, 'utf-8');
-                } catch (ex) {
-                    return "{ /*" + ex.message + "*/ }";
+        if (err) throw err;
+        
+        var tests = {};
+        
+        fs.readdir('./', function (err, files) {
+            files.forEach(function (f) {
+                if (f.length > 2 && f.substr(f.length - 3, 3) === ".js" && f.substr(0, 1) !== ".") {
+                    tests[f] = runTests('./' + f, "expresso");
                 }
-            },
-            tests,
-            {
+            });
+            
+            coveraje.cover(data, tests, {
                 useServer: true
-            }
-        );
+            });
+        });
     });
+    
+    return this;
 }());
