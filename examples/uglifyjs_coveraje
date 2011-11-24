@@ -8,32 +8,37 @@
         path = require("path"),
         filePath = path.resolve("../lib/parse-js.js");
         
-    fs.readFile(filePath, 'utf-8', function (err, data) {
-        function runTests(file, helper) {
-            return function (context) {
-                // hack: set cache value
-                require.cache[filePath] = {
-                    id: filePath,
-                    exports: context,
-                    loaded: true
-                };
-                
-                return coveraje.runHelper(helper).run(file);
+    function runTests(file, helper) {
+        return function (context) {
+            // hack: set cache value
+            require.cache[filePath] = {
+                id: filePath,
+                exports: context.exports,
+                loaded: true
             };
-        }
-        
-        if (err) throw err;
-        
-        var tests = {
-            "testparser.js": runTests("./testparser.js"),
-            "unit": runTests("./unit/scripts.js", "nodeunit")
+            
+            return coveraje.runHelper(helper).run(file);
         };
-        
-        coveraje.cover(data, tests, {
+    }
+    
+    var tests = {
+        "testparser.js": runTests("./testparser.js"),
+        "unit": runTests("./unit/scripts.js", "nodeunit")
+    };
+    
+    coveraje.cover(
+        function () {
+            // always read the content from disk, so changes can be refreshed in the browser
+            try {
+                return fs.readFileSync(filePath, 'utf-8');
+            } catch (ex) {
+                return "{ /*" + ex.message + "*/ }";
+            }
+        },
+        tests,
+        {
             useServer: true,
             globals: "node"
-        });
-    });
-    
-    return this;
+        }
+    );
 }());
