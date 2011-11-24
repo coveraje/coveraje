@@ -234,8 +234,7 @@ var coverajeResults = (function () {
                     if (used) {
                         setColors(ci.s, ci.e, {
                             "class": ci.u ? "br_ic" : "br_c",
-                            "title": ci.u ? "incomplete" : "complete",
-                            "data-br": JSON.stringify(ci.b)
+                            "title": ci.u ? "incomplete" : "complete"
                         });
                     } else {
                         col = colors.calc(max, 0);
@@ -249,12 +248,14 @@ var coverajeResults = (function () {
             }
         }
         
-        
-        
         // output html
         var out = [];
+        var apo = /'/g;
+        var lt = /</g;
+        
         ci = 0;
         dl = lens.length;
+        
         for (i = 0; i < dl; i++) {
             col = st[i];
             if (col != null) {
@@ -263,7 +264,7 @@ var coverajeResults = (function () {
                 for (var m in col) {
                     if (isOwn(col, m) && col[m] != null) {
                         var cm = String(col[m]);
-                        out.push(" " + m + "='" + cm.replace(/'/g, "&apos;") + "'");
+                        out.push(" " + m + "='" + cm.replace(apo, "&apos;") + "'");
                     }
                 }
                 out.push(">");
@@ -274,7 +275,7 @@ var coverajeResults = (function () {
             out.push(
                 text
                     .substr(ci, lens[i])
-                    .replace(/</g, "&lt;")
+                    .replace(lt, "&lt;")
             );
             
             if (col != null) {
@@ -282,6 +283,9 @@ var coverajeResults = (function () {
             }
             ci += lens[i];
         }
+        
+        lens.length = 0;
+        st.length = 0;
         return out.join("");
     }
     
@@ -297,39 +301,32 @@ var coverajeResults = (function () {
         $("#colors").empty();
         
         // show colored code
-        setTimeout(function () {
-            showText(colorize(data, settings.code));
-        }, 1);
+        showText(colorize(data, settings.code));
         
         // show the colors
-        setTimeout(function () {
-            var $c = $("<div>");
-            var um = Math.max(1, max / colors.maxColors);
+        var $c = $("<div>");
+        var um = Math.max(1, max / colors.maxColors);
+        
+        for (var i = 0; i < max; i += um) {
+            /*jshint white: false*/
+            var ii = Math.round(i);
+            if (ii > max - 1) ii = max - 1;
+            var col = colors.calc(max, i);
+            var d = data.counted[ii];
+            if (d == null) d = "";
             
-            for (var i = 0; i < max; i += um) {
-                /*jshint white: false*/
-                var ii = Math.round(i);
-                if (ii > max - 1) ii = max - 1;
-                var col = colors.calc(max, i);
-                var d = data.counted[ii];
-                if (d == null) d = "";
-                
-                $c.append(
-                    $("<span/>")
-                        .css({
-                            color: colors.hex(col, true),
-                            backgroundColor: colors.hex(col)
-                        })
-                        .text(i < 2 || ii == max - 1 ? d : "")
-                        .attr("title", d)
-                );
-            }
-            $c.children().appendTo($("#colors"));
-        }, 10);
-    }
-    
-    function showBranch(br) {
-        console.log(br);
+            $c.append(
+                $("<span/>")
+                    .css({
+                        color: colors.hex(col, true),
+                        backgroundColor: colors.hex(col)
+                    })
+                    .text(i < 2 || ii == max - 1 ? d : "")
+                    .attr("title", d)
+            );
+        }
+        $c.children().appendTo($("#colors"));
+        $c = null;
     }
     
     function runTest(runnerid) {
@@ -366,8 +363,9 @@ var coverajeResults = (function () {
                     if (settings.code) {
                         setTimeout(function () {
                             var start = a.skippedLines + 1;
+                            var n = /\n/g;
                             $("#lines").html(
-                                $.makeArray($.map(settings.code.split(/\n/g), function (el, idx) {
+                                $.makeArray($.map(settings.code.split(n), function (el, idx) {
                                     return idx + start;
                                 })).join("\n")
                             );
@@ -389,6 +387,7 @@ var coverajeResults = (function () {
                             }
                             
                             $t.children().appendTo($("#tests").empty());
+                            $t = null;
                         }
                     }
                 }
@@ -404,10 +403,6 @@ var coverajeResults = (function () {
         runTest($(this).data("runnerid"));
     });
     
-    $(".br_ic").live("mouseover", function () {
-        showBranch($(this).data("br"));
-    });
-    
     return {
         show: show,
         init: init,
@@ -417,6 +412,32 @@ var coverajeResults = (function () {
 
 $(function () {
     "use strict";
+    
+    // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
+    if (!Array.prototype.some) {
+        Array.prototype.some = function (fun) {
+            /*jshint bitwise: false, newcap: false*/
+            
+            if (this === void 0 || this === null) {
+                throw new TypeError();
+            }
+
+            var t = Object(this);
+            var len = t.length >>> 0;
+            if (typeof fun !== "function") {
+                throw new TypeError();
+            }
+
+            var thisp = arguments[1];
+            for (var i = 0; i < len; i++) {
+                if (i in t && fun.call(thisp, t[i], i, t)) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+    }
     
     // init
     coverajeResults.init();
