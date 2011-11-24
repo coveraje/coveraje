@@ -89,6 +89,10 @@ coveraje provides only only few public functions
 > >     if the code uses `setTimeout/setInterval`, you can wait some time before the results are generated.  
 > >     It's better to use `coveraje.runHelper.createEmitter()`.  
 > >     _default_: __0__  
+> > 
+> > `\_\_filename` _string_  
+> >     sometimes its needed (if you test a node module) that the correct \_\_filename and \_\_dirname is set during the tests.  
+> >     _default_: __""__  
 >
 > `callback`  
 > the callback function is called after all requested runners are finished.  
