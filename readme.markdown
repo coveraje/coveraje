@@ -90,7 +90,7 @@ coveraje provides only only few public functions
 > >     It's better to use `coveraje.runHelper.createEmitter()`.  
 > >     _default_: __0__  
 > > 
-> > `\_\_filename` _string_  
+> > `__filename` _string_  
 > >     sometimes its needed (if you test a node module) that the correct \_\_filename and \_\_dirname is set during the tests.  
 > >     _default_: __""__  
 >
