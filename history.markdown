@@ -3,6 +3,11 @@
 
 ### Versions 
 
+* __0.1.2___pre_
+  Core: Beautify code
+  WebServer: Refresh code after pressing F5
+  Core: __filename option
+
 * __0.1.1__  
   Helper: Option support for helpers  
   Helper: Add `setTimeout` to context of expresso helper  
