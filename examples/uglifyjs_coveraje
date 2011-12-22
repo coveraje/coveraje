@@ -5,9 +5,10 @@
     
     var coveraje = require("coveraje").coveraje,
         fs = require("fs"),
-        path = require("path"),
-        filePath = path.resolve("../lib/parse-js.js");
-        
+        path = require("path");
+    var rel = path.relative(process.cwd(), __dirname);
+    var filePath = path.resolve(path.join(rel, "../lib/parse-js.js"));
+    
     function runTests(file, helper) {
         return function (context) {
             // hack: set cache value
@@ -22,8 +23,8 @@
     }
     
     var tests = {
-        "testparser.js": runTests("./testparser.js"),
-        "unit": runTests("./unit/scripts.js", "nodeunit")
+        "testparser.js": runTests(path.join(rel, "testparser.js")),
+        "unit": runTests(path.join(rel, "unit/scripts.js"), "nodeunit")
     };
     
     coveraje.cover(
