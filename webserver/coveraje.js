@@ -330,6 +330,7 @@ var coverajeResults = (function () {
     }
     
     function runTest(runnerid) {
+        var $w = $(".wait").show();
         $.ajax({
             cache: false,
             url: "coveraje.json",
@@ -343,6 +344,9 @@ var coverajeResults = (function () {
             },
             error: function (r) {
                 console.log("error", r);
+            },
+            complete: function () {
+                $w.hide();
             }
         });
     }
