@@ -312,7 +312,7 @@ var coverajeResults = (function () {
             /*jshint white: false*/
             var ii = Math.round(i * doDiff);
             var col = colors.calc(max, ii);
-            var d = data.counted[ii];
+            var d = i < 2 ? data.counted[i] : data.counted[ii];
             if (d == null) d = "";
             
             $c.append(
