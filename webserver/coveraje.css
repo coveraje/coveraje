@@ -159,6 +159,9 @@ pre {
 	color: #00f;
 	font-weight: bold;
 }
+.cc_boolean {
+	color: #808;
+}
 
 /*wait spin*/
 .wait {
