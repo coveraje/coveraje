@@ -312,7 +312,7 @@ var coverajeResults = (function () {
             /*jshint white: false*/
             var ii = Math.round(i * doDiff);
             var col = colors.calc(max, ii);
-            var d = data.counted[ii];
+            var d = i < 2 ? data.counted[i] : data.counted[ii];
             if (d == null) d = "";
             
             $c.append(
@@ -330,6 +330,7 @@ var coverajeResults = (function () {
     }
     
     function runTest(runnerid) {
+        var $w = $(".wait").show();
         $.ajax({
             cache: false,
             url: "coveraje.json",
@@ -343,6 +344,9 @@ var coverajeResults = (function () {
             },
             error: function (r) {
                 console.log("error", r);
+            },
+            complete: function () {
+                $w.hide();
             }
         });
     }
@@ -439,6 +443,14 @@ $(function () {
             return false;
         };
     }
+    
+    var $lines = $(".lines"), lastScrollX;
+    $(window).on("scroll", function () {
+        if (window.scrollX !== lastScrollX) {
+            lastScrollX = window.scrollX;
+            $lines.css("left", lastScrollX);
+        }
+    });
     
     // init
     coverajeResults.init();

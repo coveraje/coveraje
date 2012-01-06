@@ -5,8 +5,8 @@
     
     var coveraje = require("coveraje").coveraje,
         fs = require("fs"),
-        path = require("path"),
-        filePath = path.resolve("../jshint.js");
+        path = require("path");
+    var filePath = path.resolve(path.join(__dirname, "../jshint.js"));
         
     function runTests(file, helper) {
         return function (context) {
@@ -23,10 +23,10 @@
     
     var tests = {};
     
-    fs.readdir('./', function (err, files) {
+    fs.readdir(__dirname, function (err, files) {
         files.forEach(function (f) {
             if (f.length > 2 && f.substr(f.length - 3, 3) === ".js" && f.substr(0, 1) !== ".") {
-                tests[f] = runTests('./' + f, "expresso");
+                tests[f] = runTests(path.join(__dirname, f), "expresso");
             }
         });
         
