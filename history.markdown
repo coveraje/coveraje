@@ -4,9 +4,11 @@
 ### Versions 
 
 * __0.1.2___pre_
-  Core: Beautify code
-  WebServer: Refresh code after pressing F5
-  Core: __filename option
+  Core: Beautify code  
+  WebServer: Refresh code after pressing F5  
+  Core: __filename option  
+  WebServer: Improve output  
+  Core: Add uglify-js as dependency (remove submodule)  
 
 * __0.1.1__  
   Helper: Option support for helpers  
