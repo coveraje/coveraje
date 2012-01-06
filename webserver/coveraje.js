@@ -444,6 +444,14 @@ $(function () {
         };
     }
     
+    var $lines = $(".lines"), lastScrollX;
+    $(window).on("scroll", function () {
+        if (window.scrollX !== lastScrollX) {
+            lastScrollX = window.scrollX;
+            $lines.css("left", lastScrollX);
+        }
+    });
+    
     // init
     coverajeResults.init();
 });
