@@ -106,9 +106,6 @@ coveraje provides only only few public functions
   The runtime. A version that runs in browsers only is on the agenda.  
 
 * [UglifyJS](https://github.com/mishoo/UglifyJS)  
-  A slightly modified version of the __uglify-js__ parser is used.  
-  The modifications can be found at https://github.com/WolfgangKluge/UglifyJS  
-  Hopefully they get into the main branch soon ;)  
 
 #### Sometimes-Dependencies
 

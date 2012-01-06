@@ -16,7 +16,13 @@
         "type": "git",
         "url": "https://github.com/coveraje/coveraje"
     },
+    "dependencies": {
+        "uglify-js": ">=1.2"
+    },
+    "devDependencies": {
+        "jshint": ">=0.4"
+    },
     "engines": {
-        "node": "> 0.4"
+        "node": ">=0.4"
     }
 }
