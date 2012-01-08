@@ -9,6 +9,7 @@
   Core: __filename option  
   WebServer: Improve output  
   Core: Add uglify-js as dependency (remove submodule)  
+  Core: Use uglify-js tokenizer to inspect elements  
 
 * __0.1.1__  
   Helper: Option support for helpers  
