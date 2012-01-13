@@ -36,6 +36,7 @@ var coverajeResults = (function () {
     "use strict";
     
     var settings;
+    var lastRunData;
     
     //
     // helper for "hasOwnProperty"
@@ -111,7 +112,7 @@ var coverajeResults = (function () {
     //
     // colorize-function
     // allows overlapping definitions
-    function colorize(data, text) {
+    function colorize(data, text, scriptColors) {
         var lens = [text.length];
         var st = [null];
         
@@ -193,10 +194,10 @@ var coverajeResults = (function () {
         var col, ci, dl, i;
         
         // simple color coding
-        if (settings && settings.colors) {
-            for (var k in settings.colors) {
-                if (isOwn(settings.colors, k) && settings.colors[k]) {
-                    col = settings.colors[k];
+        if (scriptColors) {
+            for (var k in scriptColors) {
+                if (isOwn(scriptColors, k) && scriptColors[k]) {
+                    col = scriptColors[k];
                     dl = col.length;
                     for (i = 0; i < dl; i++) {
                         ci = col[i];
@@ -270,8 +271,6 @@ var coverajeResults = (function () {
                 out.push(">");
             }
             
-            
-            
             out.push(
                 text
                     .substr(ci, lens[i])
@@ -291,16 +290,34 @@ var coverajeResults = (function () {
     
     function showText(code) {
         var sp = $(document).scrollTop();
-        $("#code").html(code);
+        $("#code").html(code.replace(/\t/g, "<span class='tab'>\t</span>"));
         $(document).scrollTop(sp);
     }
     
-    function show(data) {
-        var max = data.counted.length;
+    function currentText() {
+        if (settings.code != null) { // legacy
+            return settings.code;
+        } else if (settings.codes != null) {
+            return settings.codes[$("#files > select").val()].code;
+        }
+        return "";
+    }
+    
+    function getRepData() {
+        return lastRunData ? {
+            branches: lastRunData.branches[$("#files > select").val()],
+            visited: lastRunData.visited[$("#files > select").val()],
+            counted: lastRunData.counted
+        } : null;
+    }
+    
+    function show() {
+        var repData = getRepData();
+        var max = repData.counted.length;
         $("#colors").empty();
         
         // show colored code
-        showText(colorize(data, settings.code));
+        showText(colorize(repData, currentText()));
         
         // show the colors
         var $c = $("<div>");
@@ -312,7 +329,7 @@ var coverajeResults = (function () {
             /*jshint white: false*/
             var ii = Math.round(i * doDiff);
             var col = colors.calc(max, ii);
-            var d = i < 2 ? data.counted[i] : data.counted[ii];
+            var d = i < 2 ? repData.counted[i] : repData.counted[ii];
             if (d == null) d = "";
             
             $c.append(
@@ -340,7 +357,11 @@ var coverajeResults = (function () {
             dataType: "json",
             contentType: "application/json",
             success: function (a) {
-                show(a);
+                lastRunData = a.report;
+                settings.codes = a.files;
+                showFiles(a.files);
+                
+                show();
             },
             error: function (r) {
                 console.log("error", r);
@@ -349,6 +370,61 @@ var coverajeResults = (function () {
                 $w.hide();
             }
         });
+    }
+    
+    function showRunners(runners) {
+        if (runners) {
+            var $t = $("<div/>");
+            
+            for (var i = -1, il = runners.length; i < il; i++) {
+                var n = runners[i] || ""; //
+                
+                $t.append(
+                    $("<button />")
+                        .text(i === -1 ? "(test all)" : n)
+                        .data("runnerid", n)
+                );
+            }
+            
+            $t.children().appendTo($("#tests").empty());
+            $t = null;
+        }
+    }
+    
+    function showLines(skippedLines, code) {
+        setTimeout(function () {
+            var start = skippedLines + 1;
+            var n = /\n/g;
+            $("#lines").html(
+                $.makeArray($.map(code.split(n), function (el, idx) {
+                    return idx + start;
+                })).join("\n")
+            );
+        }, 1);
+    }
+    
+    function showFiles(codes) {
+        if (codes.length > 0) {
+            var $sel = $("<select/>").on("change", function () {
+                showFile(settings.codes[$(this).val()]);
+            });
+            for (var i = 0, il = codes.length; i < il; i++) {
+                var name = codes[i].name;
+                
+                $("<option/>")
+                    .val(i)
+                    .text(name)
+                    .appendTo($sel);
+            }
+            $sel.appendTo($("#files").empty());
+        }
+    }
+    
+    function showFile(f) {
+        var repData = getRepData();
+        
+        showLines(f.skippedLines, f.code);
+        showText(colorize(repData, f.code, f.colors));
     }
     
     function init() {
@@ -363,38 +439,20 @@ var coverajeResults = (function () {
             success: function (a) {
                 settings = a;
                 
-                if (settings) {
-                    if (settings.code) {
-                        // show lines
-                        setTimeout(function () {
-                            var start = a.skippedLines + 1;
-                            var n = /\n/g;
-                            $("#lines").html(
-                                $.makeArray($.map(settings.code.split(n), function (el, idx) {
-                                    return idx + start;
-                                })).join("\n")
-                            );
-                        }, 1);
-                        
-                        showText(colorize(null, settings.code));
-                        
-                        if (settings.runner) {
-                            var $t = $("<div/>");
-                            
-                            for (var i = -1; i < settings.runner.length; i++) {
-                                var n = settings.runner[i] || ""; //
-                                
-                                $t.append(
-                                    $("<button />")
-                                        .text(i === -1 ? "(test all)" : n)
-                                        .data("runnerid", n)
-                                );
-                            }
-                            
-                            $t.children().appendTo($("#tests").empty());
-                            $t = null;
+                if (a) {
+                    var cde, skipped;
+                    if (a.codes) {
+                        if (a.codes.length > 0) {
+                            showFiles(a.codes);
+                            showFile(a.codes[0]);
                         }
+                    } else if (a.code) { // legacy
+                        showFile({
+                            code: a.code,
+                            skippedLines: a.skippedLines
+                        });
                     }
+                    showRunners(a.runner);
                 }
             },
             error: function (r) {
