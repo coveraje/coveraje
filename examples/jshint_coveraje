@@ -29,7 +29,17 @@
                 tests[f] = runTests(path.join(__dirname, f), "expresso");
             }
         });
-        
+        tests.xxx = function (context) {
+            var x = "var foo = [1,2,3];\n\
+  fff = 2\n\
+for (var i=foo.length; i>==0; i--){\n\
+  /*...*/\n\
+  fff = 2\n\
+}\n\
+  fff = 2";
+            context.JSHINT(x);
+            console.log(context.JSHINT.errors);
+        };
         coveraje.cover(
             function () {
                 // always read the content from disk, so changes can be refreshed in the browser

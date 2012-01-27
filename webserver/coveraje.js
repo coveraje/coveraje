@@ -288,10 +288,54 @@ var coverajeResults = (function () {
         return out.join("");
     }
     
+    function getRepData() {
+        return lastRunData ? {
+            branches: lastRunData.branches[$("#files > select").val()],
+            visited: lastRunData.visited[$("#files > select").val()],
+            counted: lastRunData.counted
+        } : null;
+    }
+    
     function showText(code) {
         var sp = $(document).scrollTop();
         $("#code").html(code.replace(/\t/g, "<span class='tab'>\t</span>"));
         $(document).scrollTop(sp);
+    }
+    
+    function showLines(skippedLines, code) {
+        setTimeout(function () {
+            var start = skippedLines + 1;
+            var n = /\n/g;
+            $("#lines").html(
+                $.makeArray($.map(code.split(n), function (el, idx) {
+                    return idx + start;
+                })).join("\n")
+            );
+        }, 1);
+    }
+    
+    function showFile(f) {
+        var repData = getRepData();
+        
+        showLines(f.skippedLines, f.code);
+        showText(colorize(repData, f.code, f.colors));
+    }
+    
+    function showFiles(codes) {
+        if (codes.length > 0) {
+            var $sel = $("<select/>").on("change", function () {
+                showFile(settings.codes[$(this).val()]);
+            });
+            for (var i = 0, il = codes.length; i < il; i++) {
+                var name = codes[i].name;
+                
+                $("<option/>")
+                    .val(i)
+                    .text(name)
+                    .appendTo($sel);
+            }
+            $sel.appendTo($("#files").empty());
+        }
     }
     
     function currentText() {
@@ -301,14 +345,6 @@ var coverajeResults = (function () {
             return settings.codes[$("#files > select").val()].code;
         }
         return "";
-    }
-    
-    function getRepData() {
-        return lastRunData ? {
-            branches: lastRunData.branches[$("#files > select").val()],
-            visited: lastRunData.visited[$("#files > select").val()],
-            counted: lastRunData.counted
-        } : null;
     }
     
     function show() {
@@ -389,42 +425,6 @@ var coverajeResults = (function () {
             $t.children().appendTo($("#tests").empty());
             $t = null;
         }
-    }
-    
-    function showLines(skippedLines, code) {
-        setTimeout(function () {
-            var start = skippedLines + 1;
-            var n = /\n/g;
-            $("#lines").html(
-                $.makeArray($.map(code.split(n), function (el, idx) {
-                    return idx + start;
-                })).join("\n")
-            );
-        }, 1);
-    }
-    
-    function showFiles(codes) {
-        if (codes.length > 0) {
-            var $sel = $("<select/>").on("change", function () {
-                showFile(settings.codes[$(this).val()]);
-            });
-            for (var i = 0, il = codes.length; i < il; i++) {
-                var name = codes[i].name;
-                
-                $("<option/>")
-                    .val(i)
-                    .text(name)
-                    .appendTo($sel);
-            }
-            $sel.appendTo($("#files").empty());
-        }
-    }
-    
-    function showFile(f) {
-        var repData = getRepData();
-        
-        showLines(f.skippedLines, f.code);
-        showText(colorize(repData, f.code, f.colors));
     }
     
     function init() {
