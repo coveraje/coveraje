@@ -72,7 +72,7 @@
                     strict: true,
                     
                     bitwise: true,
-                    eqeqeqe: true,
+                    eqeqeq: true,
                     forin: true,
                     immed: true,
                     latedef: true,
@@ -99,7 +99,8 @@
                     var ext = path.extname(files[i]);
                     if (fs.statSync(fp).isFile(fp) &&
                         fp.substr(fp.length - 1) !== "~" &&
-                        (ext === ".js" || ext === ".json" || ext === "")) {
+                        (ext === ".js" || ext === ".json" || ext === "") &&
+                        files[i].indexOf(".min.") === -1) {
                         test(fp, ops, globals);
                     }
                 }

@@ -9,26 +9,6 @@
 /*jshint
     jquery: true,
     browser: true,
-    
-    white: true,
-    eqnull: true,
-    multistr: true,
-    plusplus: false,
-    regexp: true,
-    strict: true,
-    
-    bitwise: true,
-    eqeqeqe: true,
-    forin: true,
-    immed: true,
-    latedef: true,
-    newcap: true,
-    noarg: true,
-    noempty: true,
-    nonew: true,
-    undef: true,
-    trailing: true,
-    
     devel: true
 */
 
