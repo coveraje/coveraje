@@ -24,35 +24,35 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
-	display: block;
+    display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
 }
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
 
@@ -61,9 +61,9 @@ table {
     coveraje-specific
 */
 body {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Verdana, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Verdana, sans-serif;
     font-size: 10pt;
-	background-color: #fff;
+    background-color: #fff;
     color: #000;
 }
 
@@ -86,8 +86,8 @@ a {
 }
 
 #files {
-	background-color: #fff;
-	position: fixed;
+    background-color: #fff;
+    position: fixed;
     top: 55px;
     left: 0px;
     right: 0px;
@@ -140,7 +140,7 @@ pre .tab {
 }
 
 .main-section {
-	padding-top: 82px;
+    padding-top: 82px;
 }
 
 .gutter {
@@ -206,11 +206,12 @@ pre .tab {
     z-index: 2;
 }
 
+
+/*info*/
 .info {
     position: absolute;
     right: 20px;
     top: 5px;
-    
 }
 
 @media all and (max-width:960px) {
@@ -228,8 +229,7 @@ pre .tab {
     font-size: 2.3em;
     color: #fff;
     margin-bottom: 2px;
-    text-shadow: 0px 0px 11px rgba(40,0,0,0.75),
-                 0px 0px 1px #000;
+    text-shadow: 0px 0px 11px rgba(0,0,0,0.75);
 }
 
 .info h2 a {
