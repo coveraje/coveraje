@@ -17,6 +17,7 @@ var coverajeResults = (function () {
     
     var settings;
     var lastRunData;
+    var currentFileID;
     
     //
     // helper for "hasOwnProperty"
@@ -172,7 +173,7 @@ var coverajeResults = (function () {
         }
         
         var col, ci, dl, i;
-        
+       
         // simple color coding
         if (scriptColors) {
             for (var k in scriptColors) {
@@ -270,8 +271,8 @@ var coverajeResults = (function () {
     
     function getRepData() {
         return lastRunData ? {
-            branches: lastRunData.branches[$("#files > select").val()],
-            visited: lastRunData.visited[$("#files > select").val()],
+            branches: lastRunData.branches[currentFileID],
+            visited: lastRunData.visited[currentFileID],
             counted: lastRunData.counted
         } : null;
     }
@@ -302,9 +303,14 @@ var coverajeResults = (function () {
     }
     
     function showFiles(codes) {
-        if (codes.length > 0) {
+        if (codes.length === 1) {
+            currentFileID = 0;
+            showFile(settings.codes[0]);
+            $("BODY").addClass("no-files");
+        } else if (codes.length > 1) {
             var $sel = $("<select/>").on("change", function () {
-                showFile(settings.codes[$(this).val()]);
+                currentFileID = $(this).val();
+                showFile(settings.codes[currentFileID]);
             });
             for (var i = 0, il = codes.length; i < il; i++) {
                 var name = codes[i].name;
@@ -314,15 +320,14 @@ var coverajeResults = (function () {
                     .text(name)
                     .appendTo($sel);
             }
-            $sel.appendTo($("#files").empty());
+            $sel.appendTo($("#files").empty()).trigger("change");
+            $("BODY").removeClass("no-files");
         }
     }
     
     function currentText() {
-        if (settings.code != null) { // legacy
-            return settings.code;
-        } else if (settings.codes != null) {
-            return settings.codes[$("#files > select").val()].code;
+        if (settings.codes != null) {
+            return settings.codes[currentFileID].code;
         }
         return "";
     }
@@ -331,9 +336,6 @@ var coverajeResults = (function () {
         var repData = getRepData();
         var max = repData.counted.length;
         $("#colors").empty();
-        
-        // show colored code
-        showText(colorize(repData, currentText()));
         
         // show the colors
         var $c = $("<div>");
@@ -380,7 +382,7 @@ var coverajeResults = (function () {
                 show();
             },
             error: function (r) {
-                console.log("error", r);
+                if (window.console) console.log("error", r);
             },
             complete: function () {
                 $w.hide();
@@ -421,22 +423,15 @@ var coverajeResults = (function () {
                 
                 if (a) {
                     var cde, skipped;
-                    if (a.codes) {
-                        if (a.codes.length > 0) {
-                            showFiles(a.codes);
-                            showFile(a.codes[0]);
-                        }
-                    } else if (a.code) { // legacy
-                        showFile({
-                            code: a.code,
-                            skippedLines: a.skippedLines
-                        });
+                    if (a.codes && a.codes.length > 0) {
+                        showFiles(a.codes);
+                        showFile(a.codes[0]);
                     }
                     showRunners(a.runner);
                 }
             },
             error: function (r) {
-                console.log("error", r);
+                if (window.console) console.log("error", r);
             }
         });
     }

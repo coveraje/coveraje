@@ -93,11 +93,9 @@ a {
     right: 0px;
     height: 20px;
     z-index: 2;
-    padding-top: 5px;
-    padding-left: 5px;
+    padding: 5px 0px 5px 0px;
     border-bottom: 1px solid #ccc;
 }
-
 
 pre {
     font-family: 'Bitstream Vera Sans Mono', Courier, monospace;
@@ -140,7 +138,7 @@ pre .tab {
 }
 
 .main-section {
-    padding-top: 82px;
+    padding-top: 86px;
 }
 
 .gutter {
@@ -168,12 +166,12 @@ pre .tab {
 /*color coding*/
 .br_ic {
     outline: 1px solid #f00;
-    background: rgba(255, 0, 0, 0.15);
+    background: #fdd;
 }
 
 .br_c {
     outline: 1px solid #0f0;
-    background: rgba(0, 255, 0, 0.15);
+    background: #dfd;
 }
 
 .cc_string {
@@ -204,6 +202,16 @@ pre .tab {
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
+}
+
+
+/* one file only */
+.no-files #files {
+    display: none;
+}
+
+.no-files .main-section {
+    padding-top: 60px;
 }
 
 
