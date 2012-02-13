@@ -3,7 +3,7 @@
 
 ### Versions 
 
-* __0.1.2___pre_
+* __0.1.2__  
   Core: Beautify code  
   WebServer: Refresh code after pressing F5  
   Core: __filename option  
