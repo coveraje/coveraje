@@ -303,24 +303,45 @@ var coverajeResults = (function () {
     }
     
     function showFiles(codes) {
+        
         if (codes.length === 1) {
             currentFileID = 0;
             showFile(settings.codes[0]);
             $("BODY").addClass("no-files");
         } else if (codes.length > 1) {
+            var cf;
+            $("#files>select>option").each(function () {
+                var $t = $(this);
+                if ($(this).val() === currentFileID) {
+                    cf = $t.text();
+                    return false;
+                };
+            });
+            
             var $sel = $("<select/>").on("change", function () {
                 currentFileID = $(this).val();
                 showFile(settings.codes[currentFileID]);
             });
+            
+            currentFileID = 0;
             for (var i = 0, il = codes.length; i < il; i++) {
                 var name = codes[i].name;
+                
+                if (name === cf) {
+                    currentFileID = i;
+                }
                 
                 $("<option/>")
                     .val(i)
                     .text(name)
                     .appendTo($sel);
             }
-            $sel.appendTo($("#files").empty()).trigger("change");
+            
+            $sel
+                .appendTo($("#files").empty())
+                .val(currentFileID)
+                .trigger("change");
+            
             $("BODY").removeClass("no-files");
         }
     }
