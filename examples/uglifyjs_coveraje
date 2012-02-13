@@ -7,17 +7,9 @@
         fs = require("fs"),
         path = require("path");
     var rel = path.relative(process.cwd(), __dirname);
-    var filePath = path.resolve(path.join(rel, "../lib/parse-js.js"));
     
     function runTests(file, helper) {
         return function (context) {
-            // hack: set cache value
-            require.cache[filePath] = {
-                id: filePath,
-                exports: context.exports,
-                loaded: true
-            };
-            
             return coveraje.runHelper(helper).run(file);
         };
     }
@@ -28,18 +20,12 @@
     };
     
     coveraje.cover(
-        function () {
-            // always read the content from disk, so changes can be refreshed in the browser
-            try {
-                return fs.readFileSync(filePath, 'utf-8');
-            } catch (ex) {
-                return "{ /*" + ex.message + "*/ }";
-            }
-        },
+        "var uglifyjs = require('..');",
         tests,
         {
             useServer: true,
-            globals: "node"
+            globals: "node",
+            resolveRequires: ["*"]
         }
     );
 }());
