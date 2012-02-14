@@ -2,6 +2,8 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __pre__  
+  WebServer: Improve color coding  
 
 * __0.1.2__  
   Core: Beautify code  
