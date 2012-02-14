@@ -315,7 +315,7 @@ var coverajeResults = (function () {
                 if ($(this).val() === currentFileID) {
                     cf = $t.text();
                     return false;
-                };
+                }
             });
             
             var $sel = $("<select/>").on("change", function () {
