@@ -7,7 +7,7 @@
 coveraje provides only only few public functions
 
 ```javascript
-    coveraje.cover(code, runner, options, callback)
+coveraje.cover(code, runner, options, callback)
 ```
 > 
 > `code` _string_ || _function_  
@@ -20,20 +20,22 @@ coveraje provides only only few public functions
 >     If it's an object with multiple runners, the key should be descriptive (it's used to distinguish between the runners). The runner/s is/are called from coveraje.
 >     
 >   ```javascript
->         function runner(context){
->             // code to run
->         }
+function runner(context, instance){
+    // code to run
+}
 >   ```
->   Each runner is called with one argument - the context. There you can find the global scope of the executed code.  
+>   Each runner is called with two arguments.
+> > __context__ the global scope of the executed code  
+> > __instance__ the coveraje instance  
 >   In order to get asynchronous tests run until the end, you have to use
 >   
 >   ```javascript
->   return coveraje.runHelper.createEmitter(function (event) {
->       // test code, e.g.
->       require("fs").readFile("path", function (err, data) {
->           event.complete();
->       })
->   })
+return coveraje.runHelper.createEmitter(function (event) {
+    // test code, e.g.
+    require("fs").readFile("path", function (err, data) {
+        event.complete();
+    })
+})
 >   ```
 >   as your runner code. Don't use `setTimeout/setInterval` in your test directly. Use `context.setTimeout`/`context.setInterval` instead.  
 >   Don't forget `event.complete();`.
@@ -63,6 +65,12 @@ coveraje provides only only few public functions
 > > `quiet` _boolean_  
 > >     if true, suppress output to console  
 > >     _default_: __false__  
+> > 
+> > `resolveRequires` _[string - array]_  
+> >     if `globals` contains "node" and you use `require` in your source, this array is used to determine if the loaded module should be covered, too.  
+> >     for now, this only works for relative or absolute paths as the require-parameter  
+> >     you can also add "*" to this array, so it resolves every required file  
+> >     _default_: __[]__  
 > > 
 > > `serverHost` _string_  
 > >     the host to use if `useServer = true`  
@@ -96,6 +104,13 @@ coveraje provides only only few public functions
 >
 > `callback`  
 > the callback function is called after all requested runners are finished.  
+> it takes one argument, the coveraje instance.  With this you can e.g. create reports  
+>
+> ```javascript
+> function onComplete(instance) {
+>     console.log(instance.report("default"));
+> }
+> ```
 
 ###  Dependencies:
 
@@ -126,9 +141,6 @@ coveraje provides only only few public functions
 
 * [JSHint](http://jshint.com/)  
   all js-files are linted by __jshint__, so it's needed for the tests  
-
-* [expresso](http://visionmedia.github.com/expresso/)  
-  for the unit tests  
 
 ###  TDD Frameworks:
 
