@@ -193,11 +193,11 @@ var coverajeResults = (function () {
         
         if (data && data.counted) {
             var max = data.counted.length;
-            if (data.visited) {
-                dl = data.visited.length;
+            if (data.visits) {
+                dl = data.visits.length;
                 
                 for (i = 0; i < dl; i++) {
-                    ci = data.visited[i];
+                    ci = data.visits[i];
                     col = colors.calc(max, ci.i);
                     
                     setColors(ci.s, ci.e, {
@@ -272,7 +272,7 @@ var coverajeResults = (function () {
     function getRepData() {
         return lastRunData ? {
             branches: lastRunData.branches[currentFileID],
-            visited: lastRunData.visited[currentFileID],
+            visits: lastRunData.visits[currentFileID],
             counted: lastRunData.counted
         } : null;
     }
