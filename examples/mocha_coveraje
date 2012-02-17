@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+(function () {
+    "use strict";
+    
+    var coveraje = require("coveraje").coveraje,
+        fs = require("fs"),
+        path = require("path");
+    var rel = path.relative(process.cwd(), __dirname);
+    console.log("xxx2");
+    
+    function runTests(file) {
+        return function (context) {
+            return coveraje.runHelper("mocha").run(file, {
+                require: "should",
+                timeout: 200,
+                globals: ["okGlobalA", "okGlobalB"]
+            });
+        };
+    }
+    
+    var tests = {
+        /*"hook.async": runTests(path.join(rel, "hook.async.js")),
+        "hook.sync": runTests(path.join(rel, "hook.sync.js")),
+        "hook.sync.nested": runTests(path.join(rel, "hook.sync.nested.js")),
+        "http.meta.2": runTests(path.join(rel, "http.meta.2.js")),
+        "http.meta": runTests(path.join(rel, "http.meta.js")),
+        "runnable": runTests(path.join(rel, "runnable.js")),
+        "runner": runTests(path.join(rel, "runner.js")),*/
+        "suite": runTests(path.join(rel, "suite.js"))
+    };
+    
+    coveraje.cover(
+        "var mocha = require('../index');",
+        tests,
+        {
+            useServer: process.argv[2] === "true",
+            globals: "node",
+            resolveRequires: ["*"]
+        }
+    );
+}());
