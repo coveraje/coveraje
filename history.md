@@ -4,8 +4,8 @@
 ### Versions 
 * __pre__  
   WebServer: Improve color coding  
-  Core: Add function to output details  
-  Shell: Output details (option showDetails)  
+  Core: Add function to output details   
+  Helper: Add mocha helper  
 
 * __0.1.2__  
   Core: Beautify code  
