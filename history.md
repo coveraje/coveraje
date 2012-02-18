@@ -2,7 +2,7 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
-* __pre__  
+* __0.1.3__  
   WebServer: Improve color coding  
   Core: Add function to output details   
   Helper: Add mocha helper  
