@@ -55,44 +55,42 @@
         });
     }
 
-    function testFiles(folder, options, globals) {
+                
+    var ops = {
+        node: true,
+        white: true,
+        eqnull: true,
+        multistr: true,
+        plusplus: false,
+        regexp: false,
+        strict: true,
+        
+        bitwise: true,
+        eqeqeq: true,
+        forin: true,
+        immed: true,
+        latedef: true,
+        newcap: true,
+        noarg: true,
+        noempty: true,
+        nonew: true,
+        undef: true,
+        trailing: true
+    };
+    
+    var unitGlobals = {
+        test: true,
+        suite: true,
+        setup: true
+    };
+    
+    function testFiles(folder, globals) {
         folder = path.resolve(__dirname, folder);
         fs.readdir(
             folder,
             function (err, files) {
                 if (err) return;
-                
-                var ops = {
-                    node: true,
-                    white: true,
-                    eqnull: true,
-                    multistr: true,
-                    plusplus: false,
-                    regexp: false,
-                    strict: true,
-                    
-                    bitwise: true,
-                    eqeqeq: true,
-                    forin: true,
-                    immed: true,
-                    latedef: true,
-                    newcap: true,
-                    noarg: true,
-                    noempty: true,
-                    nonew: true,
-                    undef: true,
-                    trailing: true
-                };
-                
-                if (options) {
-                    for (var k in options) {
-                        if (options.hasOwnProperty(k)) {
-                            ops[k] = options[k];
-                        }
-                    }
-                }
-                
-                
+                          
                 var l = files.length;
                 for (var i = 0; i < l; i++) {
                     var fp = path.join(folder, files[i]);
@@ -114,4 +112,5 @@
     testFiles("../lib/helper");
     testFiles("../webserver");
     testFiles("../test");
+    testFiles("../test/unit", unitGlobals);
 }());
