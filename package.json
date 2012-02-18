@@ -1,17 +1,27 @@
 {
     "name": "coveraje",
-    "description" : "a simple javascript code coverage tool",
+    "version": "0.1.2",
+    "description" : "a simple javascript code coverage tool with browser frontend",
+    "homepage": "http://coveraje.github.com/",
+    "author": "Wolfgang Kluge <wolfgang@klugesoftware.de>",
+    "maintainers": [
+        {
+            "name": "Wolfgang Kluge",
+            "web": "https://klugesoftware.de/"
+        }
+    ],
     "keywords": [
         "code coverage",
-        "test coverage",
-        "javascript"
+        "test coverage"
     ],
-    "author": {
-        "name": "Wolfgang Kluge (klugesoftware.de gehirnwindung.de)"
+    "bugs": {
+        "url": "https://github.com/coveraje/coveraje/issues"
     },
-    "version": "0.1.1",
-    "preferGlobal": true,
+    "license": "MIT",
     "main": "./lib/node-coveraje.js",
+    "scripts": {
+        "test": "mocha"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/coveraje/coveraje"
@@ -20,9 +30,11 @@
         "uglify-js": ">=1.2"
     },
     "devDependencies": {
-        "jshint": ">=0.4"
+        "jshint": ">=0.4",
+        "mocha": "*",
+        "should": "*"
     },
-    "engines": {
+    "engine": {
         "node": ">=0.4"
     }
 }
