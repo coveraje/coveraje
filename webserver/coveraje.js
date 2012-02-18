@@ -310,10 +310,10 @@ var coverajeResults = (function () {
             $("BODY").addClass("no-files");
         } else if (codes.length > 1) {
             var cf;
-            $("#files>select>option").each(function () {
+            $("#files>select option").each(function () {
                 var $t = $(this);
                 if ($(this).val() === currentFileID) {
-                    cf = $t.text();
+                    cf = ($t.parent("optgroup").attr("label") || "") + $t.text();
                     return false;
                 }
             });
@@ -364,7 +364,7 @@ var coverajeResults = (function () {
                 var name = uc[i].name;
                 var idx = uc[i].index;
                 
-                if (name === cf) {
+                if (path + name === cf) {
                     currentFileID = idx;
                 }
                 
