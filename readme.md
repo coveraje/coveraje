@@ -4,7 +4,7 @@
 ### Usage 
 
 ---------------
-coveraje provides only only few public functions
+coveraje provides only few public functions
 
 ```javascript
 coveraje.cover(code, runner, options, callback)
@@ -24,10 +24,10 @@ function runner(context, instance){
     // code to run
 }
 >   ```
->   Each runner is called with two arguments.
-> > __context__ the global scope of the executed code  
-> > __instance__ the coveraje instance  
->   In order to get asynchronous tests run until the end, you have to use
+>   Each runner is called with two arguments.  
+>       - __context__ the global scope of the executed code  
+>       - __instance__ the coveraje instance  
+>   In order to get asynchronous tests run until the end, you have to use  
 >   
 >   ```javascript
 return coveraje.runHelper.createEmitter(function (event) {
@@ -97,10 +97,6 @@ return coveraje.runHelper.createEmitter(function (event) {
 > >     if the code uses `setTimeout/setInterval`, you can wait some time before the results are generated.  
 > >     It's better to use `coveraje.runHelper.createEmitter()`.  
 > >     _default_: __0__  
-> > 
-> > `__filename` _string_  
-> >     sometimes its needed (if you test a node module) that the correct \_\_filename and \_\_dirname is set during the tests.  
-> >     _default_: __""__  
 >
 > `callback`  
 > the callback function is called after all requested runners are finished.  
@@ -136,6 +132,9 @@ return coveraje.runHelper.createEmitter(function (event) {
   
 * [nodeunit](https://github.com/caolan/nodeunit)  
   if you choose the __nodeunit__ helper, you will need nodeunit...  
+  
+* [mocha](https://github.com/visionmedia/mocha)  
+  if you choose the __mocha__ helper, you will need mocha...  
 
 #### Development-Dependencies
 
@@ -145,7 +144,22 @@ return coveraje.runHelper.createEmitter(function (event) {
 ###  TDD Frameworks:
 
 ---------------
-If you have unit tests (you should) and want to know how they cover your source code, you may try it with a helper to create a _test runners_.  
-Currently there are helpers for __expresso__ and __nodeunit__.  
+If you have unit tests (you should) and want to know how they cover your source code, you may try it with a helper to create a _test runner_.  
+Currently there are helpers for __expresso__, __nodeunit__, and __mocha__.  
+
+To use such a helper, you have to define runners like in the following example.
+
+```javascript
+function test() {                       // the runner, has to be used in cover() function
+    return function (context) {
+        return coveraje.runHelper(      // It's vital to return the result
+            "name",                     // name of the helper, e.g. "mocha"
+            options                     // helper options, see comment in lib/helper/... for more details
+        ).run(relativePathToTestFile);  // the (unmodified) test file you created
+    };
+}
+```
+Take a look at examples/*, too.  
+
 
 The __expresso__-helper modifies the __expresso__-source code on the fly (not permanent). This can lead to bugs in future versions of __expresso__ (_will say_: please report bugs as soon as possible \*g\*).  
