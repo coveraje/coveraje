@@ -324,18 +324,61 @@ var coverajeResults = (function () {
             });
             
             currentFileID = 0;
-            for (var i = 0, il = codes.length; i < il; i++) {
-                var name = codes[i].name;
-                var idx = codes[i].index;
+            
+            var uc = codes.map(function (v) {
+                var n = v.name;
+                var pdx = n.lastIndexOf("/");
+                if (pdx === -1) pdx = n.lastIndexOf("\\");
+                
+                return {
+                    path: n.substr(0, pdx + 1) || "",
+                    name: n.substr(pdx + 1),
+                    index: v.index
+                };
+            });
+            
+            uc.sort(function (a, b) {
+                var an = a.path.toLowerCase();
+                var bn = b.path.toLowerCase();
+                
+                if (an > bn) {
+                    return 1;
+                } else if (an < bn) {
+                    return -1;
+                }
+                
+                an = a.name.toLowerCase();
+                bn = b.name.toLowerCase();
+                if (an > bn) {
+                    return 1;
+                } else if (an < bn) {
+                    return -1;
+                }
+                return 0;
+            });
+            
+            var lastPath = "";
+            var $at = $sel;
+            for (var i = 0, il = uc.length; i < il; i++) {
+                var path = uc[i].path;
+                var name = uc[i].name;
+                var idx = uc[i].index;
                 
                 if (name === cf) {
                     currentFileID = idx;
                 }
                 
+                if (lastPath !== path) {
+                    lastPath = path;
+                    $at = $("<optgroup/>")
+                        .attr("label", path)
+                        .appendTo($sel);
+                }
+                
                 $("<option/>")
                     .val(idx)
                     .text(name)
-                    .appendTo($sel);
+                    .appendTo($at);
             }
             
             $sel
