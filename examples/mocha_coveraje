@@ -7,34 +7,36 @@
         fs = require("fs"),
         path = require("path");
     var rel = path.relative(process.cwd(), __dirname);
-    console.log("xxx2");
     
     function runTests(file) {
         return function (context) {
-            return coveraje.runHelper("mocha").run(file, {
+            return coveraje.runHelper("mocha", {
                 require: "should",
                 timeout: 200,
-                globals: ["okGlobalA", "okGlobalB"]
-            });
+                ui: "bdd",
+                globals: ["okGlobalA", "okGlobalB"],
+                
+                _mocha: context.mocha
+            }).run(path.join(rel, file));
         };
     }
     
     var tests = {
-        /*"hook.async": runTests(path.join(rel, "hook.async.js")),
-        "hook.sync": runTests(path.join(rel, "hook.sync.js")),
-        "hook.sync.nested": runTests(path.join(rel, "hook.sync.nested.js")),
-        "http.meta.2": runTests(path.join(rel, "http.meta.2.js")),
-        "http.meta": runTests(path.join(rel, "http.meta.js")),
-        "runnable": runTests(path.join(rel, "runnable.js")),
-        "runner": runTests(path.join(rel, "runner.js")),*/
-        "suite": runTests(path.join(rel, "suite.js"))
+        "hook.async": runTests("hook.async.js"),
+        "hook.sync": runTests("hook.sync.js"),
+        "hook.sync.nested": runTests("hook.sync.nested.js"),
+        //"http.meta.2": runTests("http.meta.2.js"),
+        //"http.meta": runTests("http.meta.js"),
+        "runnable": runTests("runnable.js"),
+        "runner": runTests("runner.js"),
+        "suite": runTests("suite.js")
     };
     
     coveraje.cover(
-        "var mocha = require('../index');",
+        "var mocha = require('..');",
         tests,
         {
-            useServer: process.argv[2] === "true",
+            useServer: true,
             globals: "node",
             resolveRequires: ["*"]
         }
