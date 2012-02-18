@@ -326,13 +326,14 @@ var coverajeResults = (function () {
             currentFileID = 0;
             for (var i = 0, il = codes.length; i < il; i++) {
                 var name = codes[i].name;
+                var idx = codes[i].index;
                 
                 if (name === cf) {
-                    currentFileID = i;
+                    currentFileID = idx;
                 }
                 
                 $("<option/>")
-                    .val(i)
+                    .val(idx)
                     .text(name)
                     .appendTo($sel);
             }
