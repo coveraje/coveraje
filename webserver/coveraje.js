@@ -278,9 +278,11 @@ var coverajeResults = (function () {
     }
     
     function showText(code) {
-        var sp = $(document).scrollTop();
+        var $d = $(document);
+        var spt = $d.scrollTop();
+        var spl = $d.scrollLeft();
         $("#code").html(code.replace(/\t/g, "<span class='tab'>\t</span>"));
-        $(document).scrollTop(sp);
+        $d.scrollTop(spt).scrollLeft(spl);
     }
     
     function showLines(skippedLines, code) {
@@ -323,7 +325,7 @@ var coverajeResults = (function () {
                 var nfid = parseInt($(this).val());
                 if (currentFileID !== nfid) {
                     currentFileID = nfid;
-                    $(document).scrollTop(0);
+                    $(document).scrollTop(0).scrollLeft(0);
                 }
                 showFile(settings.codes[currentFileID]);
             });
