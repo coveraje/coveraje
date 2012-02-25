@@ -312,14 +312,19 @@ var coverajeResults = (function () {
             var cf;
             $("#files>select option").each(function () {
                 var $t = $(this);
-                if ($(this).val() === currentFileID) {
+                var vid = parseInt($(this).val(), 10);
+                if (vid === currentFileID) {
                     cf = ($t.parent("optgroup").attr("label") || "") + $t.text();
                     return false;
                 }
             });
             
             var $sel = $("<select/>").on("change", function () {
-                currentFileID = $(this).val();
+                var nfid = parseInt($(this).val());
+                if (currentFileID !== nfid) {
+                    currentFileID = nfid;
+                    $(document).scrollTop(0);
+                }
                 showFile(settings.codes[currentFileID]);
             });
             
