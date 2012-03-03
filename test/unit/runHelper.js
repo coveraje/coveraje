@@ -2,7 +2,7 @@
     "use strict";
     
     suite('runHelper-emitter', function () {
-        var runHelper = require("../../lib/runHelper").runHelper;
+        var runHelper = require("../../lib/runHelper");
         
         suite('createEmitter()', function () {
             test('should create an event emitter', function (done) {

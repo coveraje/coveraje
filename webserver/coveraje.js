@@ -3,7 +3,7 @@
     
     client script
     
-    Copyright (c) 2011 Wolfgang Kluge (klugesoftware.de, gehirnwindung.de)
+    Copyright (c) 2011-2012 Wolfgang Kluge (klugesoftware.de, gehirnwindung.de)
 */
 
 /*jshint

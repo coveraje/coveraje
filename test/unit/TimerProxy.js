@@ -2,7 +2,7 @@
     "use strict";
     
     suite('TimerProxy', function () {
-        var CoverajeTimer = require("../../lib/TimerProxy").CoverajeTimer;
+        var CoverajeTimer = require("../../lib/TimerProxy");
         var timerProxy = new CoverajeTimer();
         
         suite('stopTimers()', function () {

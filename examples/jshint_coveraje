@@ -3,7 +3,7 @@
 (function () {
     "use strict";
     
-    var coveraje = require("coveraje").coveraje,
+    var coveraje = require("coveraje"),
         fs = require("fs"),
         path = require("path");
     var filePath = path.resolve(path.join(__dirname, "../jshint.js"));

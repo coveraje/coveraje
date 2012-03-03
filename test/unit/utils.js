@@ -3,7 +3,7 @@
     var assert = require('assert');
     
     suite('utils', function () {
-        var utils = require("../../lib/utils").utils;
+        var utils = require("../../lib/utils");
         
         suite('doOptions()', function () {
             test('should combine options from right to left', function () {
