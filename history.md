@@ -2,6 +2,12 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __0.2.0__  
+  Core: Use esprima as underlaying parser  
+  Core: Add positions to inspect  
+  Core: Mark parts of logical expressions as covered, if value is `true`  
+  WebServer: Improve color coding  
+
 * __0.1.3__  
   WebServer: Improve color coding  
   Core: Add function to output details   

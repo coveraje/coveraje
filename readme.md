@@ -44,7 +44,7 @@ return coveraje.runHelper.createEmitter(function (event) {
 > Currently, there are the following options  
 > 
 > > `beautify` _boolean_  
-> >     if true, the code to inspect will be beautified (by uglifyjs) first  
+> >     if true, the code to inspect will be beautified first  
 > >     All comments are stripped by the beautifier.  
 > >     _default_: __false__  
 > > 
@@ -116,9 +116,9 @@ return coveraje.runHelper.createEmitter(function (event) {
 * [Node.js](http://nodejs.org/)  
   The runtime. A version that runs in browsers only is on the agenda.  
 
-* [UglifyJS](https://github.com/mishoo/UglifyJS)  
+* [esprima](https://github.com/ariya/esprima)  
 
-#### Sometimes-Dependencies
+#### Optional dependencies
 
 * [JQuery](http://jquery.com/)  
   The web interface uses __jquery__ (latest version is loaded from [jQuery CDN](http://code.jquery.com/))  

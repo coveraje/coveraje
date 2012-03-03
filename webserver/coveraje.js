@@ -322,7 +322,7 @@ var coverajeResults = (function () {
             });
             
             var $sel = $("<select/>").on("change", function () {
-                var nfid = parseInt($(this).val());
+                var nfid = parseInt($(this).val(), 10);
                 if (currentFileID !== nfid) {
                     currentFileID = nfid;
                     $(document).scrollTop(0).scrollLeft(0);
