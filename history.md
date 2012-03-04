@@ -2,6 +2,9 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __0.2.1__  
+  Core: fix: remove uglify-js  
+
 * __0.2.0__  
   Core: Use esprima as underlaying parser  
   Core: Add positions to inspect  
