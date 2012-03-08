@@ -2,6 +2,9 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __0.2.2__  
+  Core: use escodegen to generate the source from ast  
+
 * __0.2.1__  
   Core: fix: remove uglify-js  
 

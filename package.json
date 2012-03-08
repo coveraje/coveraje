@@ -1,6 +1,6 @@
 {
     "name": "coveraje",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description" : "a simple javascript code coverage tool with browser frontend",
     "homepage": "http://coveraje.github.com/",
     "author": "Wolfgang Kluge <wolfgang@klugesoftware.de>",
@@ -27,7 +27,8 @@
         "url": "https://github.com/coveraje/coveraje"
     },
     "dependencies": {
-        "esprima": "*"
+        "esprima": "*",
+        "escodegen": "*"
     },
     "devDependencies": {
         "jshint": ">=0.4",
