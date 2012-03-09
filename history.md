@@ -2,6 +2,9 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __0.2.3__  
+  Core: fix: exports points now to module.exports (node)  
+
 * __0.2.2__  
   Core: use escodegen to generate the source from ast  
 

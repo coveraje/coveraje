@@ -1,6 +1,6 @@
 {
     "name": "coveraje",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description" : "a simple javascript code coverage tool with browser frontend",
     "homepage": "http://coveraje.github.com/",
     "author": "Wolfgang Kluge <wolfgang@klugesoftware.de>",
