@@ -1,9 +1,9 @@
 (function () {
     "use strict";
-    
+
     suite('runHelper-emitter', function () {
         var runHelper = require("../../lib/runHelper");
-        
+
         suite('createEmitter()', function () {
             test('should create an event emitter', function (done) {
                 var counter = 0;
@@ -15,13 +15,13 @@
                 .onError(function () {
                     throw new Error("onError reached");
                 });
-                
+
                 e.start();
                 e.complete();
             });
         });
-        
-        
+
+
         suite('createCountdown()', function () {
             test('should create a countdown event emitter', function (done) {
                 var e = runHelper.createEmitter(function () {})
@@ -31,9 +31,9 @@
                     .onError(function () {
                         throw new Error("onError reached");
                     });
-                
+
                 var cd = runHelper.createCountdown(e, 5, 20);
-                
+
                 cd.one();
                 cd.one();
                 cd.one();
@@ -49,7 +49,7 @@
                 cd.one();
             });
         });
-        
+
         suite('createCountdown(wait)', function () {
             test('should raise error after x milliseconds', function (done) {
                 var isDone;
@@ -61,16 +61,16 @@
                         isDone = true;
                         done();
                     });
-                
+
                 var cd = runHelper.createCountdown(e, 5, 20);
-                
+
                 cd.one();
                 cd.one();
                 cd.one();
                 cd.one();
             });
         });
-        
+
         suite('createCountdown()', function () {
             test('should work with invalid counter', function (done) {
                 var e = runHelper.createEmitter(function () {})
@@ -80,13 +80,13 @@
                     .onError(function () {
                         throw new Error("onError reached");
                     });
-                
+
                 var cd = runHelper.createCountdown(e, -5, 20);
-                
+
                 cd.one();
             });
         });
-        
+
     });
-    
+
 }());
