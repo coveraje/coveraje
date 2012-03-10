@@ -11,6 +11,7 @@
     start("/unit/runHelper.js");
     start("/unit/TimerProxy.js");
     start("/unit/report-helper.js");
+    start("/unit/require.js");
 }());
 
 
