@@ -2,6 +2,9 @@
 ## a simple javascript code coverage tool...
 
 ### Versions 
+* __0.2.4__  
+  Core: fix: require points now to module.require (node)  
+
 * __0.2.3__  
   Core: fix: exports points now to module.exports (node)  
 
