@@ -12,6 +12,7 @@
     start("/unit/TimerProxy.js");
     start("/unit/report-helper.js");
     start("/unit/require.js");
+    start("/unit/exports.js");
 }());
 
 
