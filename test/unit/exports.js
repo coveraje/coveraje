@@ -15,16 +15,21 @@ module.exports.d = 14;\n\
 exports.c = 3;\n\
 ",
                 function (context, inst) {
+                    context.exports.e = 1;
+                    context.module.exports.f = 2;
                     if (
                         context.exports.a === 11 &&
                         context.exports.b === 12 &&
                         context.exports.c === 3 &&
                         context.exports.d === 14 &&
-                        
+
                         context.module.exports.a === 11 &&
                         context.module.exports.b === 12 &&
                         context.module.exports.c === 3 &&
-                        context.module.exports.d === 14
+                        context.module.exports.d === 14 &&
+
+                        context.module.exports.e === 1 &&
+                        context.exports.f === 2
                     ) done();
                 },
                 {
@@ -34,5 +39,4 @@ exports.c = 3;\n\
             );
         });
     });
-
 }());
