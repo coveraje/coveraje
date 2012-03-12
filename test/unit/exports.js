@@ -38,5 +38,14 @@ exports.c = 3;\n\
                 }
             );
         });
+
+
+        test('exports and module.exports as not an object', function (done) {
+            coveraje.cover('module.exports = 12', function (context, inst) {
+                if (context.module.exports === context.exports) {
+                    done();
+                }
+            }, { globals: "node", quiet: true });
+        });
     });
 }());
