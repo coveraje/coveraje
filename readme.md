@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/coveraje/coveraje.png)](http://travis-ci.org/coveraje/coveraje)
 #  coveraje
 ## a simple javascript code coverage tool...
 
